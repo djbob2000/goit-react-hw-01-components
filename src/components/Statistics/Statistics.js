@@ -8,14 +8,15 @@ export const Statistics = ({ title, stats }) => {
       {title && <h2 className={s.title}>{title}</h2>}
 
       <ul className={s.stat_list}>
-        {stats.map((stat, index) => (
+        {stats.map(({ id, label, percentage }, index) => (
           <li
             className={s.item}
-            key={stat.id}
+            key={id}
             style={{ backgroundColor: itemBGColor[index % itemBGColor.length] }}
           >
-            <span className={s.label}>{stat.label} </span>
-            <span className={s.percentage}>{stat.percentage}%</span>
+            {console.log(index % itemBGColor.length)}
+            <span className={s.label}>{label} </span>
+            <span className={s.percentage}>{percentage}%</span>
           </li>
         ))}
       </ul>
@@ -23,23 +24,22 @@ export const Statistics = ({ title, stats }) => {
   );
 };
 
-// function isTitleHere(title) {
-//   return <h2 className={s.title}>{title}</h2>;
-// };
-
-// function showTitle(props) {
-//   const isTitleSend = props.title;
-//   if (isTitleSend) {
-//     return <isTitleHere />;
-//   }
-//   return null;
-// };
-
 Statistics.defaultProps = {
   stats: [],
 };
 
+// Statistics.propTypes = {
+//   title: PropTypes.string.isRequired,
+//   stats: PropTypes.array.isRequired,
+// };
+
 Statistics.propTypes = {
-  title: PropTypes.string.isRequired,
-  stats: PropTypes.array.isRequired,
+  title: PropTypes.string,
+  stats: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      percentage: PropTypes.number.isRequired,
+    }).isRequired
+  ).isRequired,
 };
